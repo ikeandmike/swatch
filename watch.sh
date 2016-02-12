@@ -14,9 +14,9 @@
 # (1) Swapped rebuild and quit commands (personal preference)
 # (2) Watch quits once path has rebuilt once (this is used in conjunction with
 #     swatch.sh, which allows the user to monitor an entire directory for changes)
-# (3) Passes special exit code to swatch to indicate the user wants to quit
-# (4) Doesn't print "." while waiting, caused weird issues with swatch on close
-# (5) Changed echo'd messages a bit (to be more fitting to swatch)
+# (3) Changed echo'd messages a bit (to be more fitting to swatch)
+# (4) Impossible to force rebuild because watch runs in the background, however
+#     I felt this feature wasn't super useful anyway
 
 path=$1
 shift
@@ -35,18 +35,20 @@ build() {
 compare() {
   update_sha
   if [[ $sha != $previous_sha ]] ; then
-    echo -n "change detected,"
+    echo -en "\nchange detected,"
     build
     previous_sha=$sha
+  else
+    echo -n .
   fi
 }
 trap exit SIGINT # Indicate to swatch that user wants to quit
 
 echo -e  "\n--> Press Ctrl+C to exit."
 if [ $path == "." ] ; then
-  echo -e "--> watching working directory for changes"
+  echo -en "--> watching working directory for changes"
 else
-  echo -e "--> watching \"$path\" for changes"
+  echo -en "--> watching \"$path\" for changes"
 fi
 while true; do
   compare
