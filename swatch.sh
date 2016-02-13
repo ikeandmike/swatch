@@ -8,6 +8,7 @@
 
 # Notes:
 #(0) Quits successfully on CTRL+C
+#    Runs program on CTRL-\
 #(1) Tells watch to monitor entire directory, running recompile when
 #    a file changes
 #(2) Store PID of watch call
@@ -22,7 +23,16 @@ handle_exit() {
   exit
 }
 
+handle_run() {
+  kill $PID       #Stop watch for now
+  echo
+  ./prog.sh &     #Run program
+  PID2=$!
+  wait $PID2      #Wait on program call
+}
+
 trap handle_exit SIGINT       # (0)
+trap handle_run  SIGQUIT
 
 while true; do
 ./watch.sh . ./recompile.sh & # (1)

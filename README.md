@@ -5,7 +5,9 @@ Bash script which rebuilds when it detects changes in the working directory.
 Michael Giancola
 
 ## Description
-Wrapper for ```watch.sh``` which runs recompile.sh when any file in the working directory is modified.
+Wrapper for ```watch.sh```. Watch monitors a single file for changes, running a command when it detects changes. Swatch monitors the entire file directory, and runs recompile.sh (user-defined script) when changes are detected. In addition, you can run prog.sh (also user-defined) at any time by pressing Ctrl+\. 
+
+For my personal use, recompile.sh contains commands to recompile a C program, and prog.sh contains commands to run a C program.
 
 ## Usage
 ./swatch.sh

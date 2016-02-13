@@ -44,7 +44,7 @@ compare() {
 }
 trap exit SIGINT # Indicate to swatch that user wants to quit
 
-echo -e  "\n--> Press Ctrl+C to exit."
+echo -e  "\n--> Press Ctrl+\ to run prog.sh, Press Ctrl+C to exit."
 if [ $path == "." ] ; then
   echo -en "--> watching working directory for changes"
 else
